@@ -1,9 +1,12 @@
+require('./db/connections.js');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Person = require('./models.js');
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000; 
+
+
 
 const server = express();
 
@@ -12,6 +15,12 @@ const STATUS_SERVER_ERROR = 500;
 const STATUS_USER_ERROR = 422;
 
 server.use(bodyParser.json());
+
+server.get('./users', (req, res) => {
+  Person.find().then((users) => {
+    res.status(200).json(users);
+  });
+});
 
 // Your API will be built out here.
 
